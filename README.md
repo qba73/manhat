@@ -9,7 +9,7 @@ Module ```manhat``` provides functions and a ```CLI``` for calculating Manhattan
 $ git clone https://github.com/qba73/manhat
 ```
 
-## Build build binary for your OS
+## Build a binary for your OS
 
 Linux
 ```
