@@ -2,7 +2,16 @@
 
 Module ```manhat``` provides functions and a ```CLI``` for calculating Manhattan-Distance.
 
-# Usage
+# Installation and Usage
+
+You can install the app in two ways:
+
+- download binary for your OS and run it from your machine
+- clone the repo, build binary and run it
+
+## Download release
+
+You can download latest release (binary) for your operating system and architecture from [here](https://github.com/qba73/manhat/releases).
 
 ## Clone repository
 ```
