@@ -1,5 +1,6 @@
-.PHONY: help all test build build_macos cover fmt
+.PHONY: help dep test build build_macos build_win cover
 
+# Grab all make targets comments and print them out.
 define PRINT_HELP_PYSCRIPT
 import re, sys
 
@@ -31,6 +32,7 @@ ROOT := $(shell pwd)
 # List of all .go files in the project, excluding vendor and .tools
 GOFILES_NOVENDOR = $(shell find . -type f -name '*.go' -not -path "./vendor/*" -not -path "./.gopath/*")
 
+# LDFLAGS for building binary for linux, mac, win
 LDFLAGS=-ldflags "-X main.Version=${VERSION} -X main.VcsRef=${VCS_REF} -X main.BuildTime=${BUILD_DATE}"
 
 # ==================================================================
@@ -42,18 +44,11 @@ help:
 	@python -c "$$PRINT_HELP_PYSCRIPT" < $(MAKEFILE_LIST)
 	@echo
 
-all: clean vet test build ## Run tests and build a binary
-
-#vars:
-# $(info INFO: Running: vars)
-# @echo "HOSTNAME=$(HOSTNAME)"
-# @echo "GOROOT=$(GOROOT)"
-# @echo "GOPATH=$(GOPATH)"
-# @echo
-
-deps: ## Install Go dependencies
-	go get 
-
+dep: ## Install Go dependencies
+	${GO} mod tidy
+	${GO} mod verify
+	${GO} mod vendor 
+	@echo
 
 clean: ## Cleanup and remove artifacts
 	GOFLAGS=-mod=mod ${GO} clean -x
@@ -63,17 +58,16 @@ clean: ## Cleanup and remove artifacts
 	@echo
 
 build: vet ## Build binary for Linux
-	$(info INFO: Running: build)
 	mkdir -p bin/
 	GOOS=linux ${GO} build ${LDFLAGS} -o bin/$(PACKAGE) ./cmd/
 	@echo
 
-build_macos: ## Build binary for Darwin (macOS)
+build_macos: vet ## Build binary for Darwin (macOS)
 	mkdir -p bin/
 	GOOS=darwin ${GO} build ${LDFLAGS} -o bin/$(PACKAGE) ./cmd/
 	@echo
 
-build_win: vars ## Build binary for Windows
+build_win: ## Build binary for Windows
 	mkdir -p bin/
 	GOOS=windows ${GO} build ${LDFLAGS} -o bin/$(PACKAGE) ./cmd/
 	@echo
@@ -82,22 +76,15 @@ coverage: vet
 	${GO} test -count=1 -coverprofile=coverage.out -covermode=count ./...
 	@echo
 
-cover: vet check ## Run tests with coverage report html format
+cover: vet ## Run tests with coverage report html format
 	${GO} test -count=1 -coverprofile=coverage.out -covermode=count ./...
 	${GO} tool cover -html coverage.out
 	@echo
 
-test: vet ## Run tests
-	$(info INFO: Running: test)
-	${GO} test -race -v ./...
+test: ## Run tests
+	${GO} test -race 
 	@echo
 
 vet: ## Run Go vet
-	$(info INFO: Running: vet)
 	${GO} vet ./...
-	@echo
-
-check: ## Run staticcheck code analyzer
-	$(info INFO: Running check)
-	staticcheck ./...
 	@echo

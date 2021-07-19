@@ -4,10 +4,65 @@ Module ```manhat``` provides functions and a ```CLI``` for calculating Manhattan
 
 # Usage
 
-Make targets
+## Clone repository
+```
+$ git clone https://github.com/qba73/manhat
+```
+
+## Build build binary for your OS
+
+Linux
+```
+$ make build
+```
+macOS
+```
+$ make build_macos
+```
+Windows
+```
+$ make build_win
+```
+
+## Run the app
+
+### Get help
+```
+$ ./bin/manhat -h
+Usage of manhat:
+  -location int
+    	calculate Manhattan-Distance from given location to the center: manhat -location 12
+  -version
+    	show the version of the manhat app: manhat -version
+```
+
+### Get version
+```
+$ ./bin/manhat -version
+Version: 0.1.0
+GitRef: f2ae2914b2b072493176db2f5af0a24ed933c136
+Build Time: 2021-07-19-20-31-25Z
+```
+
+### Calculate distance from given location
+```
+$ ./bin/manhat -location 12
+3
+```
+```
+$ ./bin/manhat -location 1024
+31
+```
+```
+$ ./bin/manhat -location 368078
+371
+```
+
+# Development
+## Make targets
 ```bash
 $ make
-all                  Run tests and build a binary
+dep                  Install Go dependencies
 clean                Cleanup and remove artifacts
 build                Build binary for Linux
 build_macos          Build binary for Darwin (macOS)
@@ -15,22 +70,29 @@ build_win            Build binary for Windows
 cover                Run tests with coverage report html format
 test                 Run tests
 vet                  Run Go vet
-check                Run staticcheck code analyzer
+```
+
+## Verify dependencies
+```
+$ make dep
+```
+or
+```
+$ go mod tidy
+$ go mod verify
+$ go mod vendor
 ```
 
 ## Run tests
+```
+$ make test
+```
+or
+```
+$ go test -race 
+```
 
-
-## Run test with code coverage analysis
-
-
-## Build a binary
-
-
-## Run CLI
-
-### Show application version
-
-
-### Calculate distance
-
+## Run tests and show coverage report
+```
+$ make cover
+```
