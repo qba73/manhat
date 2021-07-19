@@ -14,6 +14,8 @@ type MetaInfo struct {
 	BuildTime string
 }
 
+// Cli knows hwo to run the app with provided arguments and output
+// results to a given io.Writer.
 func Cli(args []string, output io.Writer, meta MetaInfo) error {
 	flagset := flag.NewFlagSet("manhat", flag.ExitOnError)
 
