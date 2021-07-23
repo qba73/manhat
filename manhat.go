@@ -50,10 +50,10 @@ func manhattanDistance(center, poi point) int {
 // and a map representing number mapped to its coordinates.
 func buildSpiralMatrix(n int) ([][]int, map[int][]int, error) {
 	if n <= 0 {
-		return nil, nil, fmt.Errorf("invalid matrix dimention %v", n)
+		return nil, nil, fmt.Errorf("invalid matrix dimension %v", n)
 	}
 
-	// coordiantes holds a map of numbers mapped to their
+	// coordinates holds a map of numbers mapped to their
 	// coordinates in the matrix
 	coordinates := make(map[int][]int)
 
