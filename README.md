@@ -1,3 +1,5 @@
+[![Go](https://github.com/qba73/manhat/actions/workflows/go.yml/badge.svg)](https://github.com/qba73/manhat/actions/workflows/go.yml)
+
 # manhat
 
 Module ```manhat``` provides functions and a ```CLI``` for calculating Manhattan-Distance.
