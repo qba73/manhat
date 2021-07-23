@@ -27,8 +27,8 @@ func CalculateDistance(n int) (int, error) {
 
 	// Position of the Point of Interest
 	poi := point{
-		x: m[int(n)][0],
-		y: m[int(n)][1],
+		x: m[n][0],
+		y: m[n][1],
 	}
 
 	return manhattanDistance(center, poi), nil
