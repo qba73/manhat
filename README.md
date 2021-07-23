@@ -1,4 +1,4 @@
-[![Go](https://github.com/qba73/manhat/actions/workflows/go.yml/badge.svg)](https://github.com/qba73/manhat/actions/workflows/go.yml)
+[![Go](https://github.com/qba73/manhat/actions/workflows/release.yml/badge.svg)](https://github.com/qba73/manhat/actions/workflows/release.yml)
 [![Go Report Card](https://goreportcard.com/badge/github.com/qba73/manhat)](https://goreportcard.com/report/github.com/qba73/manhat)
 
 
