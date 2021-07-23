@@ -1,15 +1,19 @@
 package manhat
 
 import (
+	"errors"
 	"flag"
 	"fmt"
 	"io"
 )
 
+// These vars represent build metadata generated
+// when the binary is built. Values are assigned
+// using build flags (ldflags) at the build time.
 var version, vcsref, buildtime string
 
-// Cli knows hwo to run the app with provided arguments and output
-// results to a given io.Writer.
+// Cli knows how to run the app with provided
+// arguments and prints result to a given io.Writer.
 func Cli(args []string, output io.Writer) error {
 	flagset := flag.NewFlagSet("manhat", flag.ExitOnError)
 
@@ -17,6 +21,8 @@ func Cli(args []string, output io.Writer) error {
 	location := flagset.Int("location", 0, "calculate Manhattan-Distance from given location to the center: manhat -location 12")
 
 	flagset.Parse(args)
+	flagset.SetOutput(output)
+
 	if *printVersion {
 		fmt.Fprintf(output, "Version: %s\nGitRef: %s\nBuild Time: %s\n", version, vcsref, buildtime)
 		return nil
@@ -25,7 +31,7 @@ func Cli(args []string, output io.Writer) error {
 	// bail in case the flag is not provided or lt 0
 	if *location == 0 || *location < 0 {
 		flagset.Usage()
-		return nil
+		return errors.New("incorrect input")
 	}
 
 	distance, err := CalculateDistance(*location)
