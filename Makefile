@@ -15,7 +15,7 @@ export PRINT_HELP_PYSCRIPT
 # ==================================================================
 # ManHat Setup
 # ==================================================================
-VERSION := 0.1.0
+VERSION := `git describe --tags $(git rev-list --tags --max-count=1)`
 VCS_REF	:= `git rev-parse HEAD`
 BUILD_DATE := `date -u +"%Y-%m-%d-%H-%M-%SZ"`
 PACKAGE = manhat
