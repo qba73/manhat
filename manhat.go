@@ -14,7 +14,7 @@ func CalculateDistance(n int) (int, error) {
 	}
 
 	// We need only the map to lookup for position coordinates
-	_, m, err := buildSpiralMatrix(int(size))
+	_, m, err := buildSpiralMatrix(size)
 	if err != nil {
 		return 0, fmt.Errorf("building spiral matrix %v", err)
 	}
@@ -106,7 +106,6 @@ func buildSpiralMatrix(n int) ([][]int, map[int][]int, error) {
 			counter--
 		}
 		startCol--
-
 	}
 
 	return matrix, coordinates, nil
@@ -121,9 +120,10 @@ func calculateMatrixSize(num int) (int, error) {
 	}
 
 	x := int(math.Ceil(math.Sqrt(float64(num))))
+
+	// If x is even make it odd to build the required matrix.
 	if x%2 == 0 {
 		x++
 	}
 	return x, nil
-
 }
