@@ -10,12 +10,6 @@ import (
 func TestCliAppVersion(t *testing.T) {
 	t.Parallel()
 
-	meta := manhat.MetaInfo{
-		Version:   "0.1.0",
-		VcsRef:    "c84cf",
-		BuildTime: "2021-07-19-09-20-42Z",
-	}
-
 	tt := []struct {
 		name string
 		args []string
@@ -47,7 +41,7 @@ func TestCliAppVersion(t *testing.T) {
 		t.Run(tc.name, func(t *testing.T) {
 			out := &bytes.Buffer{}
 
-			if err := manhat.Cli(tc.args, out, meta); err != nil {
+			if err := manhat.Cli(tc.args, out); err != nil {
 				t.Fatal(err)
 			}
 			got := out.String()

@@ -7,7 +7,7 @@ import (
 
 // CalculateDistance takes a number and calculates
 // Manhattan Distance between the point and the center.
-func CalculateDistance(n float64) (float64, error) {
+func CalculateDistance(n int) (int, error) {
 	size, err := calculateMatrixSize(n)
 	if err != nil {
 		return 0, err
@@ -42,8 +42,8 @@ type point struct {
 
 // manhattanDistance takes two points (center and point of interest)
 // from the matrix and calculates the 'manhattan' distance between them.
-func manhattanDistance(center, poi point) float64 {
-	return math.Abs(float64(poi.x-center.x)) + math.Abs(float64(poi.y-center.y))
+func manhattanDistance(center, poi point) int {
+	return int(math.Abs(float64(poi.x-center.x)) + math.Abs(float64((poi.y - center.y))))
 }
 
 // buildSpiralMatrix takes a number, builds a spiral matrix
@@ -115,28 +115,15 @@ func buildSpiralMatrix(n int) ([][]int, map[int][]int, error) {
 // calculateMatrixSize takes a number and calculates
 // minimal size of the matrix that will allow to take
 // position x,y for the given point value.
-func calculateMatrixSize(num float64) (float64, error) {
+func calculateMatrixSize(num int) (int, error) {
 	if num <= 0 {
 		return 0, fmt.Errorf("invalid lookup number %v, expecting number > 0", num)
 	}
 
-	var edge float64
-
-	// make sure we do not calculate larger matrix
-	// when the lookup number is the highest in
-	// the matrix, for example: 25, 49, 81.
-	switch math.Sqrt(num) == math.Floor(math.Sqrt(num)) {
-	case true:
-		edge = math.Sqrt(num)
-		if int(edge)%2 == 0 {
-			edge++
-		}
-	default:
-		edge = math.Floor(math.Sqrt(num)) + 1
-		if int(edge)%2 == 0 {
-			edge++
-		}
+	x := int(math.Ceil(math.Sqrt(float64(num))))
+	if x%2 == 0 {
+		x++
 	}
+	return x, nil
 
-	return edge, nil
 }

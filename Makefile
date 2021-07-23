@@ -33,7 +33,7 @@ ROOT := $(shell pwd)
 GOFILES_NOVENDOR = $(shell find . -type f -name '*.go' -not -path "./vendor/*" -not -path "./.gopath/*")
 
 # LDFLAGS for building binary for linux, mac, win
-LDFLAGS=-ldflags "-X main.Version=${VERSION} -X main.VcsRef=${VCS_REF} -X main.BuildTime=${BUILD_DATE}"
+LDFLAGS=-ldflags "-X manhat.version=${VERSION} -X manhat.vcsref=${VCS_REF} -X manhat.buildtime=${BUILD_DATE}"
 
 # ==================================================================
 # Build targets

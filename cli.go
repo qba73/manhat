@@ -6,17 +6,11 @@ import (
 	"io"
 )
 
-// MetaInfo holds information about cli binary.
-// Values are populated from ldflags at build time.
-type MetaInfo struct {
-	Version   string
-	VcsRef    string
-	BuildTime string
-}
+var version, vcsref, buildtime string
 
 // Cli knows hwo to run the app with provided arguments and output
 // results to a given io.Writer.
-func Cli(args []string, output io.Writer, meta MetaInfo) error {
+func Cli(args []string, output io.Writer) error {
 	flagset := flag.NewFlagSet("manhat", flag.ExitOnError)
 
 	printVersion := flagset.Bool("version", false, "show the version of the manhat app: manhat -version")
@@ -24,7 +18,7 @@ func Cli(args []string, output io.Writer, meta MetaInfo) error {
 
 	flagset.Parse(args)
 	if *printVersion {
-		fmt.Fprintf(output, "Version: %s\nGitRef: %s\nBuild Time: %s\n", meta.Version, meta.VcsRef, meta.BuildTime)
+		fmt.Fprintf(output, "Version: %s\nGitRef: %s\nBuild Time: %s\n", version, vcsref, buildtime)
 		return nil
 	}
 
@@ -34,11 +28,11 @@ func Cli(args []string, output io.Writer, meta MetaInfo) error {
 		return nil
 	}
 
-	distance, err := CalculateDistance(float64(*location))
+	distance, err := CalculateDistance(*location)
 	if err != nil {
 		return err
 	}
 
-	fmt.Fprintf(output, "%d\n", int(distance))
+	fmt.Fprintf(output, "%d\n", distance)
 	return nil
 }
