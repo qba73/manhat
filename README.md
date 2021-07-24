@@ -8,10 +8,48 @@ Module ```manhat``` provides functions and a ```CLI``` for calculating Manhattan
 
 # Installation and Usage
 
+## Use as a CLI tool
 You can install the app in two ways:
 
 - download binary for your OS and run it from your machine
 - clone the repo, build binary and run it
+
+## Use as a library in your app
+
+Install the module:
+```
+$ go get github.com/qba73/manhat
+go get: added github.com/qba73/manhat v0.2.0
+```
+Bring dependency to your project:
+```
+$ go mod tidy
+$ go mod vendor
+```
+Use ```manhat``` in your application:
+```go
+package main
+
+import (
+	"fmt"
+	"log"
+
+	"github.com/qba73/manhat"
+)
+
+func main() {
+	// define a point value
+	point := 23
+
+	// calculate distance from the point to the center
+	distance, err := manhat.CalculateDistance(point)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println("Got distance: ", distance)
+}
+```
 
 ## Download release
 
