@@ -31,7 +31,10 @@ func TestCliCorrectInput(t *testing.T) {
 		t.Run(tc.name, func(t *testing.T) {
 			out := &bytes.Buffer{}
 
-			if err := manhat.Cli(tc.args, out); err != nil {
+			if err := manhat.Cli(
+				manhat.WithArgs(tc.args),
+				manhat.WithOutput(out),
+			); err != nil {
 				t.Fatal(err)
 			}
 			got := out.String()
@@ -65,7 +68,10 @@ func TestCliInvalidInput(t *testing.T) {
 		t.Run(tc.name, func(t *testing.T) {
 			out := &bytes.Buffer{}
 
-			if err := manhat.Cli(tc.args, out); err == nil {
+			if err := manhat.Cli(
+				manhat.WithArgs(tc.args),
+				manhat.WithOutput(out),
+			); err == nil {
 				t.Fatal(err)
 			}
 		})
